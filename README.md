@@ -1,5 +1,10 @@
 # Test assignment for Supercharge ⚡
-
+#### TODOs:
+* adjust endpoints to fit swagger documents
+* add integration to fetch meeting rooms
+* authentication process
+* dockerize (adjust drop db)
+* invitation process
 
 # Meeting room booking system
 ### Stack: Python3+, FastAPI, SQLite
