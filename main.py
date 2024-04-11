@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from .db.db import DB
+from .lib.meetings import MeetingsLib
 
 app = FastAPI()
-db = DB()
+m = MeetingsLib(DB())
 
 @app.get("/")
 async def root():
@@ -10,16 +11,16 @@ async def root():
 
 @app.get("/meeting-rooms/available")
 async def meeting_rooms_available(start: int = None, end: int = None):
-    return db.available_meeting_rooms(start, end)
+    return m.available_meeting_rooms(start, end)
 
 @app.get("/meeting-rooms/{meetingRoomId}/upcoming-meeting")
 async def meeting_rooms_upcoming_meeting(meetingRoomId: int = None):
-    return db.upcoming_meetings(meetingRoomId)
+    return m.upcoming_meetings(meetingRoomId)
 
 @app.post("/meeting-rooms/{meetingRoomId}/book")
-async def meeting_rooms_book(meetingRoomId: int = None, start: int = None, end: int = None):
-    return db.add_meeting(meetingRoomId, start, end)
+async def meeting_rooms_book(meetingRoomId: int = None, start: int = None, end: int = None, name: str = None):
+    return m.add_meeting(meetingRoomId, start, end, name)
 
 @app.delete("/meetings/{meetingId}")
 async def meetings_delete(meetingId: int = None):
-    return db.drop_meeting(meetingId)
+    return m.drop_meeting(meetingId)
